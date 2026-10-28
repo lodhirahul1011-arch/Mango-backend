@@ -1,9 +1,9 @@
-FROM node:24-bookworm-slim
+﻿FROM node:24-bookworm-slim
 WORKDIR /app
-COPY --chown=node:node package.json ./
-COPY --chown=node:node src ./src
-RUN mkdir -p /app/data && chown node:node /app/data
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+COPY --chown=node:node backend-integration ./backend-integration
 USER node
-ENV NODE_ENV=production HOST=0.0.0.0 PORT=5000 DATABASE_PATH=/app/data/roomrent.sqlite
+ENV NODE_ENV=production PORT=5000 TRUST_PROXY_HOPS=1
 EXPOSE 5000
-CMD ["node", "src/server.js"]
+CMD ["npm", "start"]
