@@ -50,3 +50,18 @@ test('PIO contact supports cross-origin preflight and validation responses witho
   assert.equal(other.headers.get('access-control-allow-origin'),null);
  } finally {await new Promise(resolve=>server.close(resolve));}
 });
+
+test('health endpoint wakes backend without sending mail or using enquiry quota',async()=>{
+ let calls=0;
+ const app=createApp({mailer:{send:async()=>{calls++;}}});
+ const server=app.listen(0,'127.0.0.1');
+ await new Promise(resolve=>server.once('listening',resolve));
+ try {
+  const response=await fetch('http://127.0.0.1:'+server.address().port+'/api/health',{headers:{Origin:'https://frontend.example'}});
+  assert.equal(response.status,200);
+  assert.equal(response.headers.get('access-control-allow-origin'),'https://frontend.example');
+  assert.equal(response.headers.get('cache-control'),'no-store');
+  assert.equal((await response.json()).status,'ok');
+  assert.equal(calls,0);
+ } finally {await new Promise(resolve=>server.close(resolve));}
+});

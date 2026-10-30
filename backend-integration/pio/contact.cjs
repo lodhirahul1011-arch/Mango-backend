@@ -9,10 +9,21 @@ function validate(body) {
   const data = {};
   for (const [key, limit] of Object.entries({name:100, phone:30, email:254, inquiryType:80, message:5000, website:200})) {
     const value = body[key] ?? '';
-    if (typeof value !== 'string' || value.length > limit || (key !== 'message' && !cleanHeader(value))) throw Error('validation');
+    if (typeof value !== 'string' || value.length > limit || (key !== 'message' && !cleanHeader(value))) throw Object.assign(Error('validation'), {errors: key === 'website' ? {} : {[key]: 'Please enter a valid value (up to '+limit+' characters).'}});
     data[key] = value.trim();
   }
-  if (!data.name || !emailPattern.test(data.email) || !/^[+\d ()-]{7,30}$/.test(data.phone) || data.phone.replace(/\D/g, '').length < 7 || data.phone.replace(/\D/g, '').length > 15 || !TYPES.includes(data.inquiryType) || data.website) throw Error('validation');
+  const errors = {};
+  if (data.name.length < 2 || !/\p{L}/u.test(data.name)) errors.name = 'Enter your name (2?100 characters).';
+  if (!emailPattern.test(data.email)) errors.email = 'Enter a valid email address.';
+  const digits = data.phone.replace(/\D/g, '');
+  if (!/^\+?[\d ()-]+$/.test(data.phone) || /^(\d)\1+$/.test(digits) ||
+      (data.phone.startsWith('+') ? digits.length < 8 || digits.length > 15 : digits.length !== 10) ||
+      (data.phone.startsWith('+91') && digits.length !== 12)) {
+    errors.phone = 'Enter a 10-digit phone number, or include + and your country code.';
+  }
+  if (!TYPES.includes(data.inquiryType)) errors.inquiryType = 'Choose an enquiry purpose.';
+  if (/\0/.test(data.message)) errors.message = 'Remove null characters from your message.';
+  if (data.website || Object.keys(errors).length) throw Object.assign(Error('validation'), {errors});
   return data;
 }
 const escapeHtml = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -41,7 +52,7 @@ function createMailer(env = process.env, dependencies = {}) {
     const port = Number(env.SMTP_PORT || env.MAIL_PORT || 587);
     const secure = env.SMTP_SECURE ?? env.MAIL_SECURE ?? String(port === 465);
     if (!host || !user || !pass || ![465,587].includes(port) || secure !== String(port === 465)) throw Error('configuration');
-    if (!transport) transport = (dependencies.createTransport || nodemailer.createTransport)({host,port,secure:port===465,requireTLS:port===587,auth:{user,pass},tls:{rejectUnauthorized:true},dnsTimeout:15000,connectionTimeout:15000,greetingTimeout:15000,socketTimeout:20000});
+    if (!transport) transport = (dependencies.createTransport || nodemailer.createTransport)({pool:true,maxConnections:2,maxMessages:100,host,port,secure:port===465,requireTLS:port===587,auth:{user,pass},tls:{rejectUnauthorized:true},dnsTimeout:15000,connectionTimeout:15000,greetingTimeout:15000,socketTimeout:20000});
     return {mode,from,to};
   }
   return {
@@ -95,7 +106,7 @@ function createRouter({mailer=createMailer(), max=5} = {}) {
   router.use(express.json({limit:'12kb'}));
   router.post('/',async(req,res)=>{
     let data;
-    try { data=validate(req.body); } catch { return res.status(400).json({message:'Please check your name, phone, email and enquiry details.'}); }
+    try { data=validate(req.body); } catch (error) { return res.status(400).json({message:'Please check your name, phone, email and enquiry details.',errors:error.errors || {}}); }
     try { await mailer.send(data); return res.status(200).json({emailStatus:'accepted'}); }
     catch { return res.status(503).json({emailStatus:'failed',message:'Email service unavailable. Please try again or call our helpline.'}); }
   });

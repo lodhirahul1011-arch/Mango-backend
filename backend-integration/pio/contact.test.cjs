@@ -14,7 +14,7 @@ test('SMTP awaits recipient acceptance, escapes HTML and uses Reply-To',async()=
  let captured,options,created=0;
  const mailer=createMailer(env,{createTransport:o=>{options=o;created++;return {sendMail:async m=>{captured=m;return {accepted:[env.CONTACT_EMAIL]};}};}});
  assert.deepEqual(await mailer.send(data),{emailStatus:'accepted'});await mailer.send(data);
- assert.equal(created,1);assert.equal(options.requireTLS,true);assert.equal(options.tls.rejectUnauthorized,true);
+ assert.equal(options.pool,true);assert.equal(options.maxConnections,2);assert.equal(created,1);assert.equal(options.requireTLS,true);assert.equal(options.tls.rejectUnauthorized,true);
  assert.equal(captured.to,env.CONTACT_EMAIL);assert.equal(captured.replyTo,data.email);assert.equal(captured.from,env.MAIL_FROM);
  assert.ok(captured.html.includes('&lt;script&gt;'));assert.ok(captured.text.includes(data.message));assert.ok(captured.text.includes('Submitted at (UTC)'));
 });
@@ -87,4 +87,35 @@ test('route mail failure is safe and never success',async()=>{
 });
 test('rate limit blocks repeated submissions',async()=>{
  await withServer({send:async()=>{}},async post=>{assert.equal((await post(data)).status,200);assert.equal((await post(data)).status,429);},1);
+});
+
+test('rejects incomplete and malformed phones and returns field errors without sending',async()=>{
+ for(const phone of ['1234567','0000000000','999+9999999','+919876543','123456789012345']) {
+  assert.throws(()=>validate({...data,phone}),error=>Boolean(error.errors.phone));
+ }
+ for(const phone of ['9876543210','+91 98765 43210','+1 (415) 555-2671']) assert.equal(validate({...data,phone}).phone,phone);
+ for(const name of ['  ','A','12345']) assert.throws(()=>validate({...data,name}),error=>Boolean(error.errors.name));
+ let calls=0;
+ await withServer({send:async()=>{calls++;}},async post=>{
+  const response=await post({...data,name:' ',phone:'123',email:'bad'});
+  assert.equal(response.status,400);
+  const body=await response.json();
+  assert.deepEqual(Object.keys(body.errors).sort(),['email','name','phone']);
+  assert.equal(calls,0);
+ });
+});
+
+test('does not acknowledge success before the mail provider accepts',async()=>{
+ let accept;
+ const accepted=new Promise(resolve=>{accept=resolve;});
+ let started;
+ const sending=new Promise(resolve=>{started=resolve;});
+ await withServer({send:async()=>{started();await accepted;}},async post=>{
+  let complete=false;
+  const response=post(data).then(r=>{complete=true;return r;});
+  await sending;
+  assert.equal(complete,false);
+  accept();
+  assert.equal((await response).status,200);
+ });
 });
