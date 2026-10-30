@@ -1,0 +1,9 @@
+Built-in image_gen. Illustrative AI-generated brand scenes, not archival photographs.
+New assets: story-tea-v1.png / .webp and story-bakery-v1.png / .webp.
+Third chapter reuses products-orchard-v2.webp; original prompt in products-orchard-v2.prompt.txt.
+
+TEA
+Premium photorealistic editorial background for an Indian beverage heritage story, landscape 16:9. Evocative fictional Assam roadside tea stall still life: weathered warm teak counter, a small brass kettle and clear glass of amber tea with delicate rising steam arranged in bottom left quarter, soft sunlit tea garden foliage and timber window at far left, pale warm limewashed plaster across center and right 65 percent as calm negative space for website text. Nostalgic morning light, exquisite realistic materials, understated cinematic quality, warm cream amber and forest green. No people, text, dates, brands or signage. Not a historical documentary photograph, purely an illustrative scene. No ornate graphics or circles. High resolution.
+
+BAKERY
+High quality photorealistic editorial still life for a family food business heritage website. Wide 16:9. Artisan bakery workbench at lower left with golden fresh bread, a bowl of flour, scattered wheat and a well-used wooden rolling pin, soft morning window light and muted sage green garden beyond at far left. Pale ivory lightly textured limewash wall occupying center and right two thirds for overlay text. Warm honey, sage and cream palette, realistic tactile food and timber, sophisticated quiet craftsmanship and generational care. Objects confined to left quarter and bottom edge, spacious uncluttered composition. No people, brands, logos, text, signage or fake factory. Illustrative brand scene, not documentary evidence of a particular company. No circles or graphical shapes.

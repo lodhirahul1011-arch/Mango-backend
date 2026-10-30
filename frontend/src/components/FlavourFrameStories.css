@@ -1,0 +1,46 @@
+.flavour-film { position: relative; height: 190svh; color: #073d2c; background: #fff6dc; --film-accent: #c27b08; }
+.flavour-film--lychee { background: #fcecf0; --film-accent: #bf4261; }
+.flavour-film__sticky { position: sticky; isolation: isolate; overflow: hidden; top: 0; height: 100svh; min-height: 650px; margin: auto; padding: 100px max(64px, calc((100% - 1152px) / 2)) 36px; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; }
+.flavour-film__backdrop { position: absolute; inset: 0; z-index: -2; pointer-events: none; }
+.flavour-film__backdrop img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.flavour-film__wash { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, #fff9eb66, #fff9eb24 48%, transparent 68%); }
+.flavour-film--lychee .flavour-film__wash { background: linear-gradient(90deg, #fff4f666, #fff4f624 48%, transparent 68%); }
+.flavour-film__copy { position: relative; }
+.flavour-film__facts span { background: #fffdf780; backdrop-filter: blur(8px); }
+.flavour-film__eyebrow { display: flex; gap: 20px; font-size: 11px; font-weight: 800; letter-spacing: .22em; }
+.flavour-film__eyebrow span { color: var(--film-accent); }
+.flavour-film__copy h2 { margin: 30px 0 24px; font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 5.3vw, 78px); font-weight: 600; line-height: .98; letter-spacing: -.045em; }
+.flavour-film__copy h2 span { display: block; }
+.flavour-film__copy h2 span:last-child { color: var(--film-accent); }
+.flavour-film__description { max-width: 370px; font-size: 15px; line-height: 1.8; color: #526558; }
+.flavour-film__facts { display: flex; gap: 14px; margin-top: 24px; font-size: 11px; font-weight: 700; }
+.flavour-film__facts span { padding: 9px 14px; border: 1px solid #073d2c25; border-radius: 30px; }
+.flavour-film__link { display: inline-flex; align-items: center; gap: 22px; margin-top: 28px; padding-bottom: 8px; border-bottom: 1px solid currentColor; font-size: 13px; font-weight: 700; }
+.flavour-film__link:focus-visible { outline: 2px solid currentColor; outline-offset: 6px; }
+.flavour-film__scroll { display: flex; align-items: center; gap: 10px; margin-top: 48px; font-size: 10px; text-transform: uppercase; letter-spacing: .16em; color: #526558; }
+.flavour-film__visual { position: relative; justify-self: center; }
+.flavour-film__picture { position: relative; height: min(74svh, 740px); aspect-ratio: 9 / 16; overflow: hidden; border-radius: 160px 160px 24px 24px; background: #d6dac0; box-shadow: 0 24px 65px #073d2c20; }
+.flavour-film__picture img, .flavour-film__picture canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.flavour-film__picture canvas { opacity: 0; }
+.flavour-film__caption { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 48px 22px 24px; background: linear-gradient(transparent, #092415aa); color: white; font-size: 9px; font-weight: 800; letter-spacing: .15em; }
+.flavour-film__track { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: #ffffff40; }
+.flavour-film__track div { height: 100%; background: #fff; transform: scaleX(0); transform-origin: left; }
+.flavour-film__side-note { position: absolute; right: -30px; top: 50%; writing-mode: vertical-rl; font-size: 9px; font-weight: 800; letter-spacing: .23em; }
+@media (max-width: 767px) {
+  .flavour-film { height: 175svh; }
+  .flavour-film__sticky { min-height: 0; padding: 90px 24px 20px; grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); gap: 18px; }
+  .flavour-film__backdrop img { object-position: 65% center; }
+  .flavour-film__wash { background: linear-gradient(180deg, #fff9ebd9, #fff9eb80 34%, #fff9eb12 70%); }
+  .flavour-film--lychee .flavour-film__wash { background: linear-gradient(180deg, #fff4f6d9, #fff4f680 34%, #fff4f612 70%); }
+  .flavour-film__eyebrow { font-size: 9px; }
+  .flavour-film__copy h2 { margin: 12px 0; font-size: clamp(34px, 9vw, 48px); }
+  .flavour-film__description, .flavour-film__facts, .flavour-film__scroll { display: none; }
+  .flavour-film__link { margin-top: 0; font-size: 11px; padding-bottom: 4px; }
+  .flavour-film__visual { height: 100%; min-height: 0; }
+  .flavour-film__picture { height: 100%; max-height: 60svh; border-radius: 100px 100px 18px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flavour-film { height: auto; }
+  .flavour-film__sticky { position: relative; }
+  .flavour-film__scroll, .flavour-film__track { display: none; }
+}

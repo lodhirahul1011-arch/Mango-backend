@@ -1,0 +1,133 @@
+/* ==================================================
+   PIO BEVERAGE — RESPONSIVE & MOBILE DESIGN SYSTEM
+   Breakpoints:
+   Small Mobile: 320px – 374px
+   Mobile: 375px – 479px
+   Mobile Large: 480px – 767px
+   Tablet: 768px – 1023px
+   Laptop: 1024px – 1199px
+   Desktop: 1200px – 1439px
+   Desktop Large: 1440px+
+   ================================================== */
+
+:root {
+  /* Dynamic page padding */
+  --page-pad: clamp(16px, 5vw, 88px);
+  --section-pad-y: clamp(64px, 10vw, 140px);
+
+  /* Mobile Nav Height */
+  --mobile-nav-h: 60px;
+  --desktop-nav-h: 74px;
+
+  /* Safe Area Insets Fallbacks */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+/* 1. Global Viewport Rules (No Horizontal Overflow) */
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  -webkit-overflow-scrolling: touch;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* 2. Responsive Images & Media */
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-pack-img {
+  object-fit: contain;
+  width: auto;
+  max-width: 100%;
+  /* Never distort or stretch packs */
+  transform: translateZ(0);
+}
+
+/* 3. Mobile Touch Target Enforcements */
+button,
+a,
+input,
+select,
+textarea {
+  min-height: 44px;
+  touch-action: manipulation;
+}
+
+/* Prevent iOS Safari auto-zoom on input focus (requires font-size >= 16px) */
+@media screen and (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* 4. Disable Custom Cursor on Touch Devices */
+@media (pointer: coarse) {
+  .custom-cursor,
+  [data-custom-cursor] {
+    display: none !important;
+    pointer-events: none !important;
+  }
+}
+
+/* 5. Safe Area Inset Helpers */
+.safe-pad-top {
+  padding-top: max(16px, var(--safe-top));
+}
+
+.safe-pad-bottom {
+  padding-bottom: max(16px, var(--safe-bottom));
+}
+
+.safe-pad-x {
+  padding-left: max(16px, var(--safe-left));
+  padding-right: max(16px, var(--safe-right));
+}
+
+/* 6. Landscape Phone Optimization (< 500px height) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-mobile-container {
+    padding-top: 60px !important;
+    padding-bottom: 24px !important;
+  }
+  
+  .hero-mobile-title {
+    font-size: 2.2rem !important;
+    line-height: 1 !important;
+  }
+
+  .hero-left-box {
+    margin-top: 10px !important;
+    padding: 14px !important;
+  }
+
+  .hide-on-landscape-phone {
+    display: none !important;
+  }
+}
+
+/* 7. Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "desktop": {
+    "folder": "desktop",
+    "count": 193,
+    "width": 2200,
+    "height": 940,
+    "fps": 24,
+    "bytes": 38186248
+  },
+  "mobile": {
+    "folder": "mobile",
+    "count": 121,
+    "width": 1100,
+    "height": 470,
+    "fps": 15,
+    "bytes": 9274528
+  }
+}

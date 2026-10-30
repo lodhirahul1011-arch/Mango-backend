@@ -7,13 +7,14 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "dev": "node backend-integration/server.cjs",
+    "dev": "npm --prefix frontend run dev",
     "start": "node backend-integration/server.cjs",
     "test": "node --test backend-integration/app.test.cjs backend-integration/pio/contact.test.cjs backend-integration/netlify.test.cjs",
     "start:roomrent": "node --env-file-if-exists=.env src/server.js",
     "test:roomrent": "node --test test/*.test.js",
-    "build": "node --check backend-integration/server.cjs && node --check netlify/functions/api.cjs",
-    "mail:verify": "node backend-integration/pio/verify.cjs"
+    "build": "npm --prefix frontend ci && npm --prefix frontend run build && node --check netlify/functions/api.cjs",
+    "mail:verify": "node backend-integration/pio/verify.cjs",
+    "dev:api": "node backend-integration/server.cjs"
   },
   "dependencies": {
     "cors": "^2.8.6",

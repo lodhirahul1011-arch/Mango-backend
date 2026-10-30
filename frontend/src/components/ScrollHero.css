@@ -1,0 +1,53 @@
+/* Match the artwork's 2752:1536 composition instead of cropping it into a short banner. */
+.pio-hero { position: relative; isolation: isolate; background: #071710; color: #fffbed; overflow: hidden; }
+.pio-hero__media { position: absolute; inset: 0; z-index: -1; }
+.pio-hero__image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.pio-hero__shell { width: 100%; min-height: max(680px, 55.81vw); padding: clamp(130px, 12vw, 240px) 6.2vw 3vw; display: flex; flex-direction: column; }
+.pio-hero__copy { width: 36%; max-width: 700px; margin-bottom: auto; }
+.pio-hero__eyebrow { color: #e1f49c; font-size: clamp(10px, .8vw, 15px); font-weight: 700; letter-spacing: .26em; }
+.pio-hero h1 { color: #fffbed; margin: 20px 0 22px; font-family: var(--font-display); font-size: clamp(80px, 8.5vw, 170px); font-weight: 600; line-height: .88; letter-spacing: -.045em; }
+.pio-hero h1 span, .pio-hero h1 em { display: block; font-family: inherit; white-space: nowrap; }
+.pio-hero h1 em { font-style: normal; color: #ddfa8a; margin-top: 10px; }
+.pio-hero__intro { font-size: clamp(16px, 1.4vw, 26px); line-height: 1.5; color: #f2f4eb; text-shadow: 0 2px 8px #071710; }
+.pio-hero__actions { margin-top: clamp(24px, 1.9vw, 38px); }
+.pio-hero__links { display: flex; flex-wrap: wrap; gap: clamp(12px, 1.1vw, 22px); }
+.pio-hero__links a { display: inline-flex; align-items: center; justify-content: center; gap: 16px; min-height: clamp(48px, 3.8vw, 72px); padding: 12px clamp(20px, 2vw, 40px); border-radius: 999px; font-size: clamp(13px, 1vw, 19px); font-weight: 700; text-decoration: none; transition: background-color .2s; }
+.pio-hero__primary { background: #ddfa8a; color: #142514; }
+.pio-hero__primary:hover { background: #edffbc; }
+.pio-hero__secondary { border: 1.5px solid #f6edda; background: #07171066; color: #fffbed; }
+.pio-hero__secondary:hover { background: #23432c; }
+.pio-hero a:focus-visible { outline: 3px solid #ddfa8a; outline-offset: 5px; }
+.pio-hero__footer { display: flex; align-items: center; gap: 28px; margin-top: 70px; font-size: clamp(9px, .65vw, 12px); letter-spacing: .15em; text-shadow: 0 2px 6px #071710; }
+.pio-hero__flavours, .pio-hero__flavours span, .pio-hero__scroll-cue { display: flex; align-items: center; gap: 10px; }
+.pio-hero__flavours { gap: 24px; font-weight: 700; }
+.pio-hero__flavours i { width: 9px; height: 9px; background: #ffc75f; border-radius: 50%; }
+.pio-hero__flavours span + span i { background: #f27c99; }
+.pio-hero__scroll-cue { color: inherit; text-decoration: none; white-space: nowrap; }
+.pio-hero__rule { height: 2px; flex: 1; background: #ffffff50; }
+.pio-hero__rule::before { content: ''; display: block; width: 12%; height: 100%; background: #ddfa8a; }
+@media (min-width: 768px) and (max-width: 1100px) {
+  .pio-hero__shell { min-height: 680px; padding-top: 160px; padding-inline: 5vw; }
+  .pio-hero__copy { width: 42%; }
+  .pio-hero h1 { font-size: clamp(72px, 8.8vw, 96px); }
+  .pio-hero__links { gap: 10px; }
+  .pio-hero__links a { padding-inline: 16px; font-size: 12px; gap: 8px; }
+}
+/* Portrait artwork is exclusive to phones; desktop composition stays unchanged. */
+@media (max-width: 767px) {
+  .pio-hero__shell { min-height: max(740px, 179.17vw); padding: 112px 24px 24px; }
+  .pio-hero__copy { width: 100%; max-width: 480px; margin-bottom: auto; }
+  .pio-hero__eyebrow { font-size: 10px; text-shadow: 0 1px 8px #071710; }
+  .pio-hero h1 { font-size: clamp(50px, 12.5vw, 88px); margin: 16px 0; line-height: 1; text-shadow: 0 2px 12px #07171066; }
+  .pio-hero h1 span, .pio-hero h1 em { display: inline; }
+  .pio-hero h1 em { margin-left: .2em; }
+  .pio-hero__intro { font-size: 14px; line-height: 1.5; }
+  .pio-hero__actions { margin-top: 20px; }
+  .pio-hero__links { gap: 8px; }
+  .pio-hero__links a { font-size: 12px; padding-inline: 14px; gap: 8px; min-height: 46px; }
+  .pio-hero__media { position: absolute; inset: 0; z-index: -1; display: block; width: 100%; }
+  .pio-hero__image { object-fit: cover; object-position: center bottom; }
+  .pio-hero__footer { margin-top: 340px; gap: 16px; font-size: 8px; letter-spacing: .04em; flex-wrap: wrap; }
+  .pio-hero__flavours { gap: 14px; }
+  .pio-hero__rule { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .pio-hero__links a { transition: none; } }

@@ -1,24 +1,25 @@
-﻿# PIO contact backend
+# PIO website and contact API
 
-Render repository: lodhirahul1011-arch/Mango-backend, branch main.
-Root Directory: empty. Build: npm ci. Start: npm start.
-Docker deployments also start the PIO API through the updated Dockerfile.
+One repository, one Netlify site. The React website is in frontend/ and the Express contact API runs as netlify/functions/api.cjs.
 
-GET /api/health returns {"status":"ok","service":"pio-backend"}.
-POST /api/pio/contact accepts name, phone, email, inquiryType, message, and optional website honeypot.
-OPTIONS /api/pio/contact supports the public frontend without cookies. Other routes are not exposed by this entrypoint.
+## Deployment
+Connect lodhirahul1011-arch/Mango-backend (main) to Netlify. Keep the base directory at the repository root. netlify.toml sets build command npm run build, publish directory frontend/dist and functions directory netlify/functions.
 
-Set mail credentials in Render Environment, never in Git. See .env.example. Set TRUST_PROXY_HOPS=1 for Render's proxy. SMTP ports 465/587 are blocked on Render Free; use a supported HTTPS provider (CONTACT_MAIL_PROVIDER=emailjs or resend) or SMTP-capable paid hosting. EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, EMAILJS_PUBLIC_KEY and EMAILJS_PRIVATE_KEY are required for emailjs. CONTACT_EMAIL controls the recipient. Resend requires RESEND_API_KEY and authorized MAIL_FROM.
+Set these server environment variables in Netlify with Functions scope:
+- CONTACT_MAIL_PROVIDER=emailjs
+- CONTACT_EMAIL (recipient address)
+- EMAILJS_SERVICE_ID
+- EMAILJS_TEMPLATE_ID=template_rosujl5
+- EMAILJS_PUBLIC_KEY
+- EMAILJS_PRIVATE_KEY
 
-Frontend Render variable: VITE_CONTACT_API_BASE_URL=https://mango-backend-1wwy.onrender.com. Rebuild frontend after setting it.
+Never commit .env files or put secrets in VITE_ variables. VITE_CONTACT_API_BASE_URL is no longer used by this combined frontend: all contact requests use the current site's /api/pio/contact endpoint. Redeploy after environment changes.
 
-npm test verifies PIO API and CORS. npm run mail:verify checks configuration/SMTP without sending email.
-Previous RoomRent sources are preserved; npm run start:roomrent explicitly runs that application. The default deployed service is now PIO.
+GET /api/health returns JSON. POST /api/pio/contact validates enquiries before sending mail. API rewrites precede the frontend fallback, so API failures are not turned into HTML success pages. The in-memory enquiry rate limit is per function instance, not global across Netlify instances.
 
-TDD evidence: tests were copied and executed before implementation; RED was missing app.cjs/contact.cjs. After porting the tested PIO implementation, npm test validates the API and cross-origin preflight. Live delivery requires deployment environment configuration.
+## Local development
+Run npm ci and npm --prefix frontend ci. Put mail settings in the root .env. Run npm run dev:api and npm run dev in separate terminals. Vite proxies /api to localhost:5000.
 
-## Netlify backend
-Connect this repository to the backend Netlify site. The root netlify.toml builds the API function and publishes public/. Routes: GET /api/health and POST /api/pio/contact.
-Set CONTACT_MAIL_PROVIDER=emailjs, CONTACT_EMAIL, EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID=template_rosujl5, EMAILJS_PUBLIC_KEY and EMAILJS_PRIVATE_KEY in Netlify environment variables with Functions scope, then deploy. Never put private keys in VITE_ variables.
-Set the frontend build environment VITE_CONTACT_API_BASE_URL=https://celadon-griffin-9382dd.netlify.app and rebuild the frontend. netlify.toml in the frontend repository applies only when the frontend is built on Netlify; a Render frontend requires this value in Render Environment.
-The in-memory enquiry rate limit applies per function instance, not globally across Netlify instances.
+npm test runs API and Netlify handler tests. npm --prefix frontend run typecheck checks frontend types. npm run build builds the website. npm run mail:verify validates provider configuration without sending mail.
+
+Previous RoomRent sources are preserved; npm run start:roomrent runs that separate application. They are not part of the Netlify deployment.

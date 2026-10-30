@@ -1,0 +1,115 @@
+.products-showcase .products-bg-shift {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: #f4eddc url('/images/products-orchard-v2.webp') center / cover no-repeat;
+}
+
+.products-showcase .products-bg-shift::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #fff9ea85, #fff9ea18 58%, transparent);
+}
+
+.products-showcase .products-heading-line:last-child {
+  width: fit-content;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+.products-heading-line:last-child::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 3px;
+  width: 95%;
+  height: 7px;
+  border-radius: 50%;
+  background: #edab27;
+  transform: rotate(-3deg);
+}
+
+.products-flavour-notes {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  z-index: 20;
+}
+.products-showcase .flavour-info {
+  position: relative;
+  width: auto;
+  min-width: 0;
+  padding: 18px 20px;
+  background: #fffdf7;
+  box-shadow: 0 12px 32px #47361a14;
+}
+.products-showcase .flavour-info-mango { border-top: 3px solid #eaae20; }
+.products-showcase .flavour-info-lychee { border-top: 3px solid #e87993; }
+.products-showcase .flavour-info p { line-height: 1.65; }
+
+.products-sip-seal {
+  position: absolute;
+  top: 4%;
+  right: 5%;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: #085735;
+  color: #fff5c9;
+  border: 5px solid #fff5c9;
+  outline: 1px solid #08573533;
+  box-shadow: 0 12px 30px #08573518;
+  transform: rotate(12deg);
+}
+.products-sip-seal span { font-size: 8px; font-weight: 800; letter-spacing: .16em; }
+.products-sip-seal strong { font-size: 15px; }
+.product-float { width: 100%; height: 100%; animation: pio-pack-bob 5s ease-in-out infinite; }
+.product-float-lychee { animation-delay: -2.5s; animation-duration: 5.8s; }
+.product-float img { transition: scale .45s ease, filter .45s ease; }
+.products-showcase .products-badges span { transition: transform .3s ease, background .3s ease; }
+.products-showcase .products-cta { transition: box-shadow .3s ease, background .3s ease; }
+.products-showcase .products-cta:hover { box-shadow: 0 18px 40px #064f3240; }
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .product-visual:hover .product-float img { scale: 1.055; }
+  .products-showcase .products-badges span:hover { transform: translateY(-4px); background: #fff; }
+}
+
+.products-mobile > img:first-child { opacity: 1; object-position: 60% center; }
+.products-mobile > img:first-child + div { background: linear-gradient(180deg, #fff9eabf, #fff9ea20 60%, #fff9eadb); }
+.mobile-pack { animation: pio-mobile-bob 5s ease-in-out infinite; }
+.mobile-pack-lychee { animation-delay: -2.5s; }
+
+@keyframes pio-pack-bob {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-16px) rotate(1deg); }
+}
+@keyframes pio-mobile-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -12px; }
+}
+
+@media (min-width: 1024px) {
+  .products-showcase .products-desktop { grid-template-columns: 1fr 1.15fr; gap: 24px; }
+  .products-desktop h2 { font-size: clamp(3.5rem, 5.2vw, 5.9rem); }
+  .products-showcase .products-stage { min-height: 670px; }
+  .products-stage .product-mango { top: 55px; left: 3%; width: 46%; height: 450px; }
+  .products-stage .product-lychee { top: 95px; right: 3%; width: 46%; height: 435px; }
+  .products-stage .product-float img { height: 100%; }
+  .products-showcase .products-sip-seal { width: 94px; height: 94px; top: 0; right: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .products-showcase *, .products-showcase *::after, .products-showcase *::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,429 @@
+html:root {
+  scroll-padding-top: 104px;
+}
+
+.pio-navbar {
+  position: fixed;
+  z-index: 70;
+  top: max(16px, env(safe-area-inset-top));
+  left: 50%;
+  width: min(1220px, calc(100% - 48px));
+  transform: translateX(-50%);
+  color: #f7f7e9;
+}
+
+.pio-navbar__surface {
+  border: 1px solid rgba(218, 239, 190, .17);
+  border-radius: 22px;
+  background: rgba(5, 23, 17, .8);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, .23), inset 0 1px rgba(255, 255, 255, .08);
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  transition: background-color .25s, border-color .25s, box-shadow .25s;
+}
+
+.pio-navbar.is-scrolled .pio-navbar__surface {
+  border-color: rgba(218, 239, 190, .23);
+  background: rgba(4, 19, 14, .94);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, .3), inset 0 1px rgba(255, 255, 255, .08);
+}
+
+.pio-navbar__layout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 18px;
+  min-height: 76px;
+  padding: 10px 18px;
+}
+
+.pio-navbar__brand {
+  display: flex;
+  width: 92px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(224, 240, 210, .16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .94);
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+
+.pio-navbar__brand img {
+  display: block;
+  width: 68px;
+  height: 35px;
+  object-fit: contain;
+}
+
+.pio-navbar__brand:hover {
+  transform: translateY(-1px);
+}
+
+.pio-navbar__links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2px, .45vw, 8px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pio-navbar__links button,
+.pio-navbar__mobile-links button {
+  min-height: 44px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(247, 247, 233, .82);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .2s, border-color .2s, color .2s;
+}
+
+.pio-navbar__links button {
+  padding: 0 clamp(9px, 1vw, 15px);
+}
+
+.pio-navbar__links button:hover,
+.pio-navbar__links button.is-active {
+  border-color: rgba(217, 239, 145, .15);
+  background: rgba(217, 239, 145, .13);
+  color: #e3f6a5;
+}
+
+.pio-navbar__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.pio-navbar__utility,
+.pio-navbar__menu-toggle {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(218, 239, 190, .2);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .07);
+  color: #e9f2dd;
+  cursor: pointer;
+  transition: background-color .2s, border-color .2s, color .2s, transform .2s;
+}
+
+.pio-navbar__utility:hover,
+.pio-navbar__menu-toggle:hover {
+  border-color: rgba(217, 239, 145, .52);
+  background: rgba(217, 239, 145, .14);
+  color: #e3f6a5;
+}
+
+.pio-navbar__partner,
+.pio-navbar__mobile-partner {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 20px;
+  border: 1px solid rgba(221, 242, 152, .35);
+  border-radius: 999px;
+  background: #d9ef91;
+  color: #173320;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .2s, transform .2s;
+}
+
+.pio-navbar__partner:hover,
+.pio-navbar__mobile-partner:hover {
+  transform: translateY(-1px);
+  background: #e7f8ac;
+}
+
+.pio-navbar__menu-toggle {
+  display: none;
+}
+
+.pio-navbar :focus-visible,
+.pio-navbar__mobile :focus-visible {
+  outline: 3px solid #d9ef91;
+  outline-offset: 3px;
+}
+
+.pio-navbar__mobile {
+  position: fixed;
+  z-index: 69;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility .25s;
+}
+
+.pio-navbar__mobile.is-open {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.pio-navbar__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(0, 8, 5, .55);
+  opacity: 0;
+  backdrop-filter: blur(4px);
+  transition: opacity .25s;
+}
+
+.pio-navbar__mobile.is-open .pio-navbar__backdrop {
+  opacity: 1;
+}
+
+.pio-navbar__mobile-panel {
+  position: absolute;
+  top: calc(max(16px, env(safe-area-inset-top)) + 70px);
+  right: 12px;
+  left: 12px;
+  display: flex;
+  max-height: calc(100dvh - max(16px, env(safe-area-inset-top)) - 92px);
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 22px;
+  border: 1px solid rgba(218, 239, 190, .2);
+  border-radius: 26px;
+  background: rgba(5, 23, 17, .97);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .42), inset 0 1px rgba(255, 255, 255, .08);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  color: #f7f7e9;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity .25s, transform .25s;
+}
+
+.pio-navbar__mobile.is-open .pio-navbar__mobile-panel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pio-navbar__mobile-title {
+  margin: 0 12px 12px;
+  color: #b6c8ae;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.pio-navbar__mobile-links {
+  display: grid;
+  gap: 4px;
+}
+
+.pio-navbar__mobile-links button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-radius: 14px;
+  color: #f3f3e9;
+  font-size: 15px;
+  text-align: left;
+}
+
+.pio-navbar__mobile-links button:hover,
+.pio-navbar__mobile-links button.is-active {
+  background: rgba(217, 239, 145, .13);
+  color: #e3f6a5;
+}
+
+.pio-navbar__active-mark {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d9ef91;
+}
+
+.pio-navbar__mobile-actions {
+  display: grid;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(218, 239, 190, .15);
+}
+
+.pio-navbar__mobile-partner {
+  width: 100%;
+  min-height: 50px;
+}
+
+.pio-navbar__mobile-utility {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  border: 1px solid rgba(218, 239, 190, .16);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .05);
+  color: #f3f3e9;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pio-navbar__mobile-utility:hover {
+  background: rgba(217, 239, 145, .12);
+  color: #e3f6a5;
+}
+
+.pio-navbar__mobile-actions p {
+  margin: 8px 0 0;
+  color: #b6c8ae;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+@media (max-width: 1279px) {
+  .pio-navbar {
+    width: min(1120px, calc(100% - 40px));
+  }
+
+  .pio-navbar__links,
+  .pio-navbar__utility {
+    display: none;
+  }
+
+  .pio-navbar__menu-toggle {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pio-navbar__partner {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  html:root {
+    scroll-padding-top: 84px;
+  }
+
+  .pio-navbar {
+    top: max(12px, env(safe-area-inset-top));
+    width: calc(100% - 24px);
+  }
+
+  .pio-navbar__surface {
+    border-radius: 999px;
+  }
+
+  .pio-navbar__layout {
+    min-height: 58px;
+    padding: 7px 10px 7px 12px;
+  }
+
+  .pio-navbar__brand {
+    width: 78px;
+    height: 42px;
+  }
+
+  .pio-navbar__brand img {
+    width: 60px;
+    height: 31px;
+  }
+
+  .pio-navbar__actions {
+    gap: 8px;
+  }
+
+  .pio-navbar__menu-toggle {
+    width: 42px;
+    height: 42px;
+  }
+
+  .pio-navbar__mobile-panel {
+    top: calc(max(12px, env(safe-area-inset-top)) + 68px);
+    right: 12px;
+    left: 12px;
+    max-height: calc(100dvh - max(12px, env(safe-area-inset-top)) - 84px);
+    padding: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pio-navbar *,
+  .pio-navbar__mobile,
+  .pio-navbar__mobile * {
+    scroll-behavior: auto;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* One stable desktop layout for both hero and scrolled states. */
+@media (min-width: 1280px) {
+  .pio-navbar { width: min(1440px, calc(100% - 64px)); top: max(20px, env(safe-area-inset-top)); }
+  .pio-navbar__surface { border-radius: 26px; background: rgba(9,31,20,.9); border-color: rgba(222,244,198,.24); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .pio-navbar.is-scrolled .pio-navbar__surface { background: #092015; border-color: rgba(222,244,198,.3); }
+  .pio-navbar__layout { min-height: 80px; gap: 16px; padding: 12px 18px; }
+  .pio-navbar__brand { width: 100px; height: 50px; }
+  .pio-navbar__brand img { width: 76px; height: 39px; }
+  .pio-navbar__links { gap: clamp(2px, .4vw, 8px); min-width: 0; }
+  .pio-navbar__links button { min-height: 46px; font-size: 13px; padding-inline: clamp(10px, 1vw, 16px); }
+  .pio-navbar__links button.is-active { color: #ddfa8a; background: #dafa8a20; border-color: #ddfa8a60; }
+  .pio-navbar__partner { min-height: 48px; padding-inline: 20px; font-size: 13px; background: #146b2d; color: #fffbed; border-color: #4c9b4b; }
+  .pio-navbar__partner:hover { background: #208139; }
+}
+@media (max-width: 1279px) {
+  .pio-navbar__layout { grid-template-columns: auto minmax(0, 1fr); gap: 12px; }
+  .pio-navbar__actions { min-width: 0; }
+  .pio-navbar__partner { font-size: 13px; }
+  .pio-navbar__mobile-links button { font-size: 16px; min-height: 48px; }
+  .pio-navbar__mobile-panel { top: calc(max(16px, env(safe-area-inset-top)) + 88px); max-height: calc(100dvh - max(16px, env(safe-area-inset-top)) - 108px); }
+}
+@media (max-width: 767px) {
+  .pio-navbar__layout { gap: 10px; }
+  .pio-navbar__partner { padding-inline: clamp(10px, 3vw, 18px); gap: 8px; }
+  .pio-navbar__menu-toggle { width: 44px; height: 44px; }
+  .pio-navbar__mobile-panel { top: calc(max(12px, env(safe-area-inset-top)) + 70px); max-height: calc(100dvh - max(12px, env(safe-area-inset-top)) - 90px); }
+}
+@media (max-width: 359px) {
+  .pio-navbar__layout { padding-inline: 8px; gap: 6px; }
+  .pio-navbar__brand { width: 64px; }
+  .pio-navbar__brand img { width: 52px; }
+  .pio-navbar__actions { gap: 6px; }
+  .pio-navbar__partner { font-size: 12px; padding-inline: 9px; gap: 5px; }
+}
+
+/* Hidden navigation must not remain clickable or keyboard-focusable below the hero. */
+.pio-navbar[hidden] { display: none; }
+
+/* Transparent hero navigation on phones and desktop, including its scrolled state. */
+.pio-navbar .pio-navbar__surface,
+.pio-navbar.is-scrolled .pio-navbar__surface {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+.pio-navbar__links button { text-shadow: 0 1px 6px rgba(0, 15, 8, .8); }

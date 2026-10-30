@@ -1,0 +1,99 @@
+.pio-moments {
+  --moments-top: 98px;
+  position: relative;
+  padding: clamp(64px, 8vw, 120px) 0 64px;
+  color: #073d2c;
+  background: #f8f6ef;
+  isolation: isolate;
+  overflow: visible;
+  transform: none;
+  will-change: auto;
+}
+.pio-moments__intro, .pio-moments__scene { width: min(90%, 1440px); margin-inline: auto; }
+.pio-moments__intro { display: flex; justify-content: space-between; gap: 32px; align-items: flex-end; margin-bottom: clamp(36px, 5vw, 72px); }
+.pio-moments__eyebrow { display: flex; align-items: center; gap: 12px; margin: 0; font-size: 10px; line-height: 1.5; font-weight: 800; letter-spacing: .16em; }
+.pio-moments__intro .pio-moments__eyebrow > span { width: 7px; height: 7px; border-radius: 50%; background: #167a4a; }
+.pio-moments__intro h2 { margin: 24px 0 0; font-size: clamp(42px, 5.6vw, 84px); line-height: .98; font-weight: 600; letter-spacing: -.045em; }
+.pio-moments h2 em, .pio-moments h3 em { font-family: inherit; font-weight: 500; }
+.pio-moments__intro h2 em { color: #42735b; }
+.pio-moments__intro-note { padding-bottom: 5px; }
+.pio-moments__intro-note p { margin: 0 0 18px; font-size: 14px; line-height: 1.8; color: #476353; }
+.pio-moments__intro-note a { display: inline-flex; align-items: center; gap: 24px; border-bottom: 1px solid #073d2c50; font-size: 12px; font-weight: 700; }
+.pio-moments__scene { position: relative; scroll-margin-top: var(--moments-top); }
+.pio-moments__viewport { position: relative; }
+.pio-moments__toolbar { display: flex; align-items: center; justify-content: space-between; min-height: 48px; padding-bottom: 12px; }
+.pio-moments__controls { display: none; align-items: center; gap: 8px; }
+.pio-moments__counter { margin-right: 12px; font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.pio-moments__counter > span:last-child { color: #617569; margin-left: 4px; }
+.pio-moments__controls button { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #073d2c35; background: transparent; color: #073d2c; cursor: pointer; }
+.pio-moments__controls button:hover:not(:disabled) { background: #073d2c; color: #fff; }
+.pio-moments__controls button:disabled { opacity: .3; cursor: default; }
+.pio-moments__rail { position: relative; display: grid; gap: 24px; list-style: none; margin: 0; padding: 0; }
+.pio-moments__card { --moment-ink: #083b28; --moment-muted: #375541; display: grid; grid-template-columns: 1fr 1fr; min-width: 0; border-radius: 28px; background: #f7c85b; color: var(--moment-ink); border: 1px solid #073d2c14; overflow: hidden; }
+.pio-moments__card--lychee { background: #efc2ce; --moment-ink: #492b3a; --moment-muted: #624351; }
+.pio-moments__card--assam { background: #124a38; --moment-ink: #fff7df; --moment-muted: #d7e5da; }
+.pio-moments__card--together { background: #ece8d8; }
+.pio-moments__copy { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(24px, 3vw, 48px); }
+.pio-moments__number { font-size: 16px; letter-spacing: -.04em; opacity: .7; }
+.pio-moments__card h3 { color: var(--moment-ink); font-size: clamp(36px, 4vw, 62px); line-height: 1.02; letter-spacing: -.045em; margin: auto 0 20px; padding-top: 28px; }
+.pio-moments__description { font-size: 14px; line-height: 1.8; color: var(--moment-muted); max-width: 340px; margin: 0; }
+.pio-moments__cta { display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 48px; margin-top: 24px; border-bottom: 1px solid currentColor; font-size: 12px; font-weight: 800; }
+.pio-moments__cta:hover svg { transform: translate(2px, -2px); }
+.pio-moments__cta svg { transition: transform .2s ease; flex-shrink: 0; }
+.pio-moments__pack-note { margin-top: auto; padding-top: 30px; font-size: 9px; line-height: 1.7; font-weight: 800; letter-spacing: .12em; color: var(--moment-muted); }
+.pio-moments__art { position: relative; min-width: 0; min-height: 400px; overflow: hidden; background: #dfd6b5; isolation: isolate; }
+.pio-moments__landscape { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.pio-moments__art--pack .pio-moments__landscape { opacity: .75; object-position: 75% center; }
+.pio-moments__halo { position: absolute; inset: 12% 7%; border: 1px solid #fff7dd85; border-radius: 50%; transform: rotate(-18deg); background: #fff6d330; }
+.pio-moments__pack { position: absolute; left: 50%; top: 50%; width: 65%; height: 82%; object-fit: contain; transform: translate(-50%, -50%) rotate(-9deg); filter: drop-shadow(15px 24px 18px #3c342a35); }
+.pio-moments__card--lychee .pio-moments__pack { transform: translate(-50%, -50%) rotate(8deg); }
+.pio-moments__art-label { position: absolute; bottom: 22px; left: 24px; right: 24px; border-top: 1px solid #ffffff85; padding-top: 10px; font-family: var(--font-display); font-size: 24px; font-style: italic; color: #fff; text-shadow: 0 1px 10px #000; }
+.pio-moments__footer { display: none; align-items: center; gap: 28px; min-height: 44px; padding-top: 10px; font-size: 9px; font-weight: 800; letter-spacing: .12em; }
+.pio-moments__footer > span:last-child { display: inline-flex; align-items: center; gap: 12px; }
+.pio-moments__progress { height: 2px; background: #073d2c20; flex: 1; overflow: hidden; }
+.pio-moments__progress span { display: block; width: 100%; height: 100%; background: #167a4a; transform: scaleX(0); transform-origin: left center; }
+.pio-moments a:focus-visible, .pio-moments button:focus-visible { outline: 3px solid currentColor; outline-offset: 5px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .pio-moments[data-layout="horizontal"] .pio-moments__viewport { position: sticky; top: var(--moments-top); }
+  .pio-moments[data-layout="horizontal"] .pio-moments__window { overflow: clip; padding: 6px; margin: -6px; }
+  .pio-moments[data-layout="horizontal"] .pio-moments__rail { display: flex; will-change: transform; }
+  .pio-moments[data-layout="horizontal"] .pio-moments__card { flex: 0 0 min(88%, 1120px); min-height: clamp(390px, 56svh, 590px); }
+  .pio-moments[data-layout="horizontal"] .pio-moments__controls, .pio-moments[data-layout="horizontal"] .pio-moments__footer { display: flex; }
+}
+@media (max-width: 899px) {
+  .pio-moments { padding-block: 56px; }
+  .pio-moments__intro { display: block; margin-bottom: 30px; }
+  .pio-moments__intro-note { margin-top: 22px; }
+  .pio-moments__card { grid-template-columns: 1fr; border-radius: 24px; }
+  .pio-moments__card h3 { font-size: clamp(38px, 8vw, 64px); }
+  .pio-moments__copy { padding: 28px; }
+  .pio-moments__description { max-width: 48ch; }
+  .pio-moments__art { min-height: 0; aspect-ratio: 5 / 4; }
+  .pio-moments__pack { height: 90%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pio-moments__scene { height: auto !important; }
+  .pio-moments__viewport { position: relative !important; top: auto !important; }
+  .pio-moments__rail { transform: none !important; }
+  .pio-moments__cta svg { transition: none; }
+}
+
+/* Phone scenes: compact full-width cards, with real content measured before sticking. */
+@media (max-width: 899px) {
+  .pio-moments__rail { gap: 16px; }
+  .pio-moments__copy { padding: 20px 22px; }
+  .pio-moments__card h3 { margin: 12px 0; padding-top: 0; font-size: clamp(32px, 8.3vw, 43px); line-height: 1.04; }
+  .pio-moments__description { font-size: 13px; line-height: 1.65; }
+  .pio-moments__cta { min-height: 44px; margin-top: 12px; }
+  .pio-moments__pack-note { padding-top: 14px; font-size: 8px; }
+  .pio-moments__eyebrow { font-size: 9px; letter-spacing: .11em; }
+  .pio-moments__toolbar { padding-bottom: 8px; }
+  .pio-moments__footer { gap: 12px; font-size: 8px; letter-spacing: .08em; min-height: 36px; }
+  .pio-moments__footer > span:last-child { display: none; }
+  .pio-moments__art { aspect-ratio: auto; height: clamp(160px, 23svh, 225px); min-height: 160px; }
+  .pio-moments__art-label { bottom: 12px; left: 18px; right: 18px; font-size: 20px; padding-top: 6px; }
+  .pio-moments[data-layout="horizontal"] .pio-moments__card { flex-basis: 100%; min-height: 0; grid-template-rows: auto auto; }
+  .pio-moments__pack { width: 60%; height: 95%; }
+  .pio-moments__counter { margin-right: 4px; }
+}

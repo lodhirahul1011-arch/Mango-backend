@@ -1,0 +1,35 @@
+{
+  "durationSeconds": 8.041666666666666,
+  "sourceFps": 24,
+  "sourceDimensions": [
+    2200,
+    940
+  ],
+  "sourceBytes": 16694171,
+  "variants": {
+    "desktop": {
+      "count": 193,
+      "width": 1440,
+      "height": 616,
+      "sampleFps": 24.0,
+      "sourceFrameStep": 1,
+      "firstIndex": 0,
+      "lastIndex": 192,
+      "pattern": "desktop/frame-%04d.webp",
+      "totalBytes": 15780934,
+      "poster": "poster-desktop.webp"
+    },
+    "mobile": {
+      "count": 97,
+      "width": 768,
+      "height": 328,
+      "sampleFps": 12.0,
+      "sourceFrameStep": 2,
+      "firstIndex": 0,
+      "lastIndex": 96,
+      "pattern": "mobile/frame-%04d.webp",
+      "totalBytes": 3335928,
+      "poster": "poster-mobile.webp"
+    }
+  }
+}
