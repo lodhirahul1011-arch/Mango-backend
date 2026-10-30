@@ -82,7 +82,7 @@ function createMailer(env = process.env, dependencies = {}) {
             submitted_at:new Date().toISOString(),
           },
         }),signal:AbortSignal.timeout(20000)});
-        if (!response.ok) throw Error('provider');
+        if (!response.ok) throw Object.assign(Error('provider'), {providerStatus:response.status});
       } else {
         const rows=[['Name',data.name],['Phone',data.phone],['Email',data.email],['Enquiry purpose',data.inquiryType],['Message',data.message || '(Not provided)'],['Submitted at (UTC)',new Date().toISOString()]];
         const mail={from:cfg.from,to:cfg.to,replyTo:data.email,subject,text:rows.map(([k,v])=>k+': '+v).join('\n'),html:'<h2>PIO website enquiry</h2>'+rows.map(([k,v])=>'<p><b>'+k+':</b> '+escapeHtml(v).replace(/\n/g,'<br>')+'</p>').join('')};
@@ -107,8 +107,11 @@ function createRouter({mailer=createMailer(), max=5} = {}) {
   router.post('/',async(req,res)=>{
     let data;
     try { data=validate(req.body); } catch (error) { return res.status(400).json({message:'Please check your name, phone, email and enquiry details.',errors:error.errors || {}}); }
-    try { await mailer.send(data); return res.status(200).json({emailStatus:'accepted'}); }
-    catch { return res.status(503).json({emailStatus:'failed',message:'Email service unavailable. Please try again or call our helpline.'}); }
+    try { await mailer.send(data); console.info('[PIO contact] Mail provider accepted enquiry'); return res.status(200).json({emailStatus:'accepted'}); }
+    catch (error) {
+      console.error('[PIO contact] Delivery failed', {category:['configuration','provider'].includes(error.message) ? error.message : error.name === 'TimeoutError' ? 'timeout' : 'transport', providerStatus:Number.isInteger(error.providerStatus) ? error.providerStatus : undefined});
+      return res.status(503).json({emailStatus:'failed',message:'Email service unavailable. Please try again or call our helpline.'});
+    }
   });
   router.use((err,req,res,next)=>res.status(err.type==='entity.too.large'?413:400).json({message:'Invalid request body.'}));
   return router;
